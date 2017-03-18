@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34b20b9e-7e48-4885-bdce-02051afe5aa0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     reserva.`fechaEntrada` AS reserva_fechaEntrada,
+     reserva.`costoTotal` AS reserva_costoTotal,
+     reserva.`idReserva` AS reserva_idReserva,
+     cliente.`Nombre` AS cliente_Nombre,
+     cliente.`Apellidos` AS cliente_Apellidos,
+     recepcionista.`Nombre` AS recepcionista_Nombre,
+     recepcionista.`Apellidos` AS recepcionista_Apellidos,
+     habitacion.`Estado` AS habitacion_Estado,
+     habitacion.`Numero` AS habitacion_Numero,
+     categoria.`nombre` AS categoria_nombre
+FROM
+     `cliente` cliente INNER JOIN `reserva` reserva ON cliente.`idCliente` = reserva.`idCliente`
+     INNER JOIN `recepcionista` recepcionista ON reserva.`idRecepcionista` = recepcionista.`idRecepcionista`
+     INNER JOIN `reserva_has_habitacion` reserva_has_habitacion ON reserva.`idReserva` = reserva_has_habitacion.`idReserva`
+     INNER JOIN `habitacion` habitacion ON reserva_has_habitacion.`idHabitacion` = habitacion.`idHabitacion`
+     INNER JOIN `categoria` categoria ON habitacion.`Tipo_idTipo` = categoria.`idCategoria`
+WHERE
+     reserva.`idReserva` = $P{id}]]>
+	</queryString>
+	<field name="reserva_fechaEntrada" class="java.sql.Date"/>
+	<field name="reserva_costoTotal" class="java.math.BigDecimal"/>
+	<field name="reserva_idReserva" class="java.lang.String"/>
+	<field name="cliente_Nombre" class="java.lang.String"/>
+	<field name="cliente_Apellidos" class="java.lang.String"/>
+	<field name="recepcionista_Nombre" class="java.lang.String"/>
+	<field name="recepcionista_Apellidos" class="java.lang.String"/>
+	<field name="habitacion_Estado" class="java.lang.String"/>
+	<field name="habitacion_Numero" class="java.lang.Integer"/>
+	<field name="categoria_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<frame>
+				<reportElement uuid="585d7851-eabd-4e99-924a-59bf4e036cb1" mode="Opaque" x="0" y="0" width="555" height="69" forecolor="#000000" backcolor="#CC0000"/>
+				<staticText>
+					<reportElement uuid="4d89c897-7f82-4ada-a10b-aa42c7475201" x="0" y="0" width="336" height="37" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Arial" size="28"/>
+					</textElement>
+					<text><![CDATA[Comprobante de Pago]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="53fae6a2-74f5-40cd-9d34-9eb2ba64c7c9" x="455" y="0" width="100" height="20" forecolor="#FFFFFF"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{reserva_fechaEntrada}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="e42f7bff-da10-4efa-8c04-87598fb2e916" x="407" y="0" width="48" height="20" forecolor="#FFFFFF"/>
+					<textElement/>
+					<text><![CDATA[Fecha:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a1d495fa-c8b4-4cf6-beb0-199c818bb38b" x="407" y="20" width="115" height="20"/>
+					<textElement/>
+					<text><![CDATA[Numero Comprobante]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="61e8fc24-96d4-48ee-bfe5-2a112ca4102c" x="407" y="40" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{reserva_idReserva}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="196" splitType="Stretch">
+			<frame>
+				<reportElement uuid="585d7851-eabd-4e99-924a-59bf4e036cb1" mode="Opaque" x="0" y="0" width="555" height="195" forecolor="#000000" backcolor="#CCFFCC"/>
+				<staticText>
+					<reportElement uuid="61910863-d4cf-41c4-85cd-6d04de52ab05" x="11" y="14" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Datos del cliente:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d5c8d602-abb3-4b59-87ca-da9626ecb56f" x="376" y="14" width="146" height="20"/>
+					<textElement/>
+					<text><![CDATA[Atendido por el recepcionista:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="31864285-e037-46b7-87cf-b53f9cbaeb71" x="11" y="34" width="57" height="20"/>
+					<textElement/>
+					<text><![CDATA[Nombre:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="547a5dbb-0619-4a77-9de9-3a5a78111d24" x="11" y="54" width="57" height="20"/>
+					<textElement/>
+					<text><![CDATA[Apellido:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="dcd3d75f-1a1a-4f56-b53c-64dfe563e665" x="68" y="34" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{cliente_Nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="3ae22dbc-02b0-4998-9096-73c02697b111" x="68" y="54" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{cliente_Apellidos}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="547a5dbb-0619-4a77-9de9-3a5a78111d24" x="376" y="54" width="57" height="20"/>
+					<textElement/>
+					<text><![CDATA[Apellido:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="31864285-e037-46b7-87cf-b53f9cbaeb71" x="376" y="34" width="57" height="20"/>
+					<textElement/>
+					<text><![CDATA[Nombre:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="cbd3ad79-6d21-46bd-be7d-4cb8a0663e20" x="433" y="34" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{recepcionista_Nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="8f28766e-fe83-4078-bfba-7e1691c1e89e" x="433" y="54" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{recepcionista_Apellidos}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2d767cb8-06fd-41fb-9a1b-ce43303d3b79" x="11" y="96" width="157" height="20"/>
+					<textElement/>
+					<text><![CDATA[Datos de la Habitacion]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0161aa12-143b-43ef-a6d7-da61f7805f69" x="433" y="148" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Costo total:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="dcc5000c-557e-4476-ade2-3a419e040f4b" x="433" y="168" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{reserva_costoTotal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d3d729fa-f69f-44b2-8db0-0876cd27dca9" x="137" y="148" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{categoria_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="4b1c5418-529f-4399-8da6-4175f4ece4fd" x="11" y="148" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{habitacion_Numero}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="0537f81b-f7bf-483a-8261-6d5c1bc1817e" x="11" y="128" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Numero:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="93820940-544e-420e-883a-0319d777762c" x="137" y="128" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Categoria:]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</pageHeader>
+</jasperReport>
